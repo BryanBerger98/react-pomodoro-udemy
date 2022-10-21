@@ -1,0 +1,15 @@
+.timers-table {
+	margin-top: 3rem;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.timers-table th,
+.timers-table td {
+	padding: 0.5rem;
+	text-align: left;
+}
+
+.timers-table th {
+	border-bottom: 1px solid black;
+}
