@@ -1,33 +1,45 @@
-import { Component } from 'react';
 import Timer from './Timer';
 import TimersTable from './TimersTable';
 import style from './App.module.css';
 
-class App extends Component {
+function secondsToHms(timeInSeconds) {
+	timeInSeconds = Number(timeInSeconds);
+	const h = Math.floor(timeInSeconds / 3600);
+	const m = Math.floor(timeInSeconds % 3600 / 60);
+	const s = Math.floor(timeInSeconds % 3600 % 60);
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			timers: [],
-		};
-	}
+	const hDisplay = h < 10 ? '0' + h : h;
+	const mDisplay = m < 10 ? '0' + m : m;
+	const sDisplay = s < 10 ? '0' + s : s;
 
-	saveTime = (time) => {
+	return `${hDisplay}:${mDisplay}:${sDisplay}`;
+};
+
+function App() {
+
+	let timers = [
+		{
+			date: new Date(),
+			time: 265,
+		},
+	];
+
+	const saveTime = (time) => {
 		const date = new Date();
-		this.setState({
-			timers: [...this.state.timers, { time, date }],
-		});
+		timers = [...timers, { time, date }];
 	};
 
-	render() {
-		return (
-			<div className={ style.container }>
-				<h1 className={ style['main-title'] }>Pomodoro Timer</h1>
-				<Timer saveTime={ this.saveTime } />
-				<TimersTable timers={ this.state.timers } />
-			</div>
-		);
+	const displayTimerDetails = (timer) => {
+		alert(`${timer.date.toLocaleDateString()} at ${timer.date.toLocaleTimeString()} \n${secondsToHms(timer.time)}`);
 	}
+
+	return (
+		<div className={ style.container }>
+			<h1 className={ style['main-title'] }>Pomodoro Timer</h1>
+			<Timer saveTime={ saveTime } />
+			<TimersTable timers={ timers } onDisplayTimerDetails={ displayTimerDetails } />
+		</div>
+	);
 }
 
 export default App;

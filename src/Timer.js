@@ -1,18 +1,6 @@
 import { Component } from 'react';
+import ClockDisplay from './ClockDisplay';
 import style from './Timer.module.css';
-
-function secondsToHms(timeInSeconds) {
-	timeInSeconds = Number(timeInSeconds);
-	const h = Math.floor(timeInSeconds / 3600);
-	const m = Math.floor(timeInSeconds % 3600 / 60);
-	const s = Math.floor(timeInSeconds % 3600 % 60);
-
-	const hDisplay = h < 10 ? '0' + h : h;
-	const mDisplay = m < 10 ? '0' + m : m;
-	const sDisplay = s < 10 ? '0' + s : s;
-
-	return `${hDisplay}:${mDisplay}:${sDisplay}`;
-};
 
 class Timer extends Component {
 
@@ -52,7 +40,7 @@ class Timer extends Component {
 	render() {
 		return (
 			<>
-				<p className={ style['clock-timer'] }>{ secondsToHms(this.state.time) }</p>
+				<ClockDisplay time={ this.state.time } className={ style['clock-timer'] } />
 				<button className={ `${style['clock-btn']} ${style[`clock-btn-${ this.state.isTimerStarted ? 'stop' : 'start' }`]}` } onClick={ this.handleStartTimer }>{ this.state.isTimerStarted ? 'Stop' : 'Start' }</button>
 			</>
 		);
