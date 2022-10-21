@@ -1,6 +1,7 @@
 import Timer from './Timer';
 import TimersTable from './TimersTable';
 import style from './App.module.css';
+import { useState } from 'react';
 
 function secondsToHms(timeInSeconds) {
 	timeInSeconds = Number(timeInSeconds);
@@ -17,16 +18,11 @@ function secondsToHms(timeInSeconds) {
 
 function App() {
 
-	let timers = [
-		{
-			date: new Date(),
-			time: 265,
-		},
-	];
+	const [timers, setTimers] = useState([]);
 
 	const saveTime = (time) => {
 		const date = new Date();
-		timers = [...timers, { time, date }];
+		setTimers([...timers, { time, date }]);
 	};
 
 	const displayTimerDetails = (timer) => {

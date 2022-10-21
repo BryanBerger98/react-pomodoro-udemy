@@ -1,50 +1,43 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import ClockDisplay from './ClockDisplay';
 import style from './Timer.module.css';
 
-class Timer extends Component {
+let timerId;
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			isTimerStarted: false,
-			time: 0,
-		};
-	}
+function Timer(props) {
 
-	handleStartTimer = () => {
-		if (this.state.isTimerStarted) { // isTimerStarted est true => On veut arrêter le timer
+	const [isTimerStarted, setIsTimerStarted] = useState(false);
+	const [time, setTime] = useState(0);
 
-			clearInterval(this.timerId);
+	const handleStartTimer = () => {
+		if (isTimerStarted) { // isTimerStarted est true => On veut arrêter le timer
 
-			this.props.saveTime(this.state.time);
+			clearInterval(timerId);
 
-			this.setState({
-				isTimerStarted: false,
-				time: 0,
-			});
+			props.saveTime(time);
+
+			setIsTimerStarted(false);
+			setTime(0);
+
 		} else { // isTimerStarted est false => On veut démarrer le timer
-			this.setState({
-				isTimerStarted: true,
-			});
-			this.timerId = setInterval(() => {
-				this.setState(({ time }) => {
-					return {
-						time: time + 1,
-					};
+
+			setIsTimerStarted(true);
+
+			timerId = setInterval(() => {
+				setTime((prevTime) => {
+					return prevTime + 1;
 				});
 			}, 1000);
 		}
 	}
 
-	render() {
-		return (
-			<>
-				<ClockDisplay time={ this.state.time } className={ style['clock-timer'] } />
-				<button className={ `${style['clock-btn']} ${style[`clock-btn-${ this.state.isTimerStarted ? 'stop' : 'start' }`]}` } onClick={ this.handleStartTimer }>{ this.state.isTimerStarted ? 'Stop' : 'Start' }</button>
-			</>
-		);
-	}
+
+	return (
+		<>
+			<ClockDisplay time={ time } className={ style['clock-timer'] } />
+			<button className={ `${style['clock-btn']} ${style[`clock-btn-${ isTimerStarted ? 'stop' : 'start' }`]}` } onClick={ handleStartTimer }>{ isTimerStarted ? 'Stop' : 'Start' }</button>
+		</>
+	);
 }
 
 export default Timer;
