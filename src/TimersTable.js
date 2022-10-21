@@ -16,7 +16,7 @@ function TimersTable(props) {
 						props.timers.map((timer) => (
 							<tr onClick={ () => props.onDisplayTimerDetails(timer) } key={ timer.date.getMilliseconds() }>
 								<td>{ timer.date.toLocaleDateString() } at { timer.date.toLocaleTimeString() }</td>
-								<td><ClockDisplay /></td>
+								<td><ClockDisplay time={ timer.time } /></td>
 							</tr>
 						))
 					}
