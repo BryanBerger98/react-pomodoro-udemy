@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import Button from './Button';
 import ClockDisplay from './ClockDisplay';
 import style from './Timer.module.css';
+import TimerText from './TimerText';
 
 let timerId;
 
@@ -31,11 +33,11 @@ function Timer(props) {
 		}
 	}
 
-
 	return (
 		<>
 			<ClockDisplay time={ time } className={ style['clock-timer'] } />
-			<button className={ `${style['clock-btn']} ${style[`clock-btn-${ isTimerStarted ? 'stop' : 'start' }`]}` } onClick={ handleStartTimer }>{ isTimerStarted ? 'Stop' : 'Start' }</button>
+			<Button isTimerStarted={ isTimerStarted } onClick={ handleStartTimer } />
+			<TimerText isTimerStarted={ isTimerStarted } />
 		</>
 	);
 }

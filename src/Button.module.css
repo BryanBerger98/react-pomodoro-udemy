@@ -1,0 +1,20 @@
+.clock-btn {
+	padding: 0.6rem 1.8rem;
+	font-size: 1.8rem;
+	border-radius: 20px;
+	color: beige;
+	border: none;
+}
+
+.clock-btn-start {
+	background-color: tomato;
+}
+
+.clock-btn-stop {
+	background-color: sandybrown;
+}
+
+.clock-btn:hover {
+	cursor: pointer;
+	opacity: 0.8;
+}
