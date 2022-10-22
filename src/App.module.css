@@ -12,3 +12,13 @@
 	font-size: 3rem;
 	color: tomato;
 }
+
+.dark {
+	background-color: black;
+	color: white;
+}
+
+.light {
+	background-color: beige;
+	color: black;
+}

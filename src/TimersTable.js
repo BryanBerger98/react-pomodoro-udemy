@@ -1,7 +1,11 @@
+import { useContext } from 'react';
 import ClockDisplay from './ClockDisplay';
+import { TasksContext } from './contexts/Tasks';
 import style from './TimersTable.module.css';
 
 function TimersTable(props) {
+
+	const { tasksData, removeTask } = useContext(TasksContext);
 
 	return (
 		<table className={ style['timers-table'] }>
@@ -11,16 +15,20 @@ function TimersTable(props) {
 						<th>Task</th>
 						<th>Description</th>
 						<th>Time</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 					{
-						props.timers.map((timer) => (
-							<tr onClick={ () => props.onDisplayTimerDetails(timer) } key={ timer.date.getMilliseconds() }>
-								<td>{ timer.date.toLocaleDateString() } at { timer.date.toLocaleTimeString() }</td>
-								<td>{ timer.title }</td>
-								<td>{ timer.description }</td>
-								<td><ClockDisplay time={ timer.time } /></td>
+						tasksData.tasks.map((task, index) => (
+							<tr key={ task.date.getMilliseconds() }>
+								<td>{ task.date.toLocaleDateString() } at { task.date.toLocaleTimeString() }</td>
+								<td>{ task.title }</td>
+								<td>{ task.description }</td>
+								<td><ClockDisplay time={ task.time } /></td>
+								<td>
+									<button onClick={ () => removeTask(index) }>Delete</button>
+								</td>
 							</tr>
 						))
 					}
