@@ -8,7 +8,9 @@ function TimersTable(props) {
 	const { tasksData, removeTask } = useContext(TasksContext);
 
 	return (
-		<table className={ style['timers-table'] }>
+		<>
+			<h3>{tasksData.count} Task{tasksData.count > 1 ? 's' : ''} registered</h3>
+			<table className={ style['timers-table'] }>
 				<thead>
 					<tr>
 						<th>Date</th>
@@ -34,6 +36,7 @@ function TimersTable(props) {
 					}
 				</tbody>
 			</table>
+		</>
 	);
 }
 
