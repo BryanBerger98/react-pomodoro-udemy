@@ -1,16 +1,22 @@
-import { useContext } from 'react';
-import ClockDisplay from './ClockDisplay';
+import { useContext, useState } from 'react';
 import { TasksContext } from './contexts/Tasks';
+import TaskRow from './TaskRow';
 import style from './TimersTable.module.css';
 
 function TimersTable(props) {
+
+	const [check, setCheck] = useState(false);
 
 	const { tasksData, removeTask } = useContext(TasksContext);
 
 	return (
 		<>
 			<h3>{tasksData.count} Task{tasksData.count > 1 ? 's' : ''} registered</h3>
-			<table className={ style['timers-table'] }>
+			<div>
+				<input type="checkbox" id="check" onChange={ e => setCheck(e.target.checked)} />
+				<label htmlFor="check">Check</label>
+			</div>
+			<table className={style['timers-table']}>
 				<thead>
 					<tr>
 						<th>Date</th>
@@ -23,15 +29,7 @@ function TimersTable(props) {
 				<tbody>
 					{
 						tasksData.tasks.map((task, index) => (
-							<tr key={ task.date.getMilliseconds() }>
-								<td>{ task.date.toLocaleDateString() } at { task.date.toLocaleTimeString() }</td>
-								<td>{ task.title }</td>
-								<td>{ task.description }</td>
-								<td><ClockDisplay time={ task.time } /></td>
-								<td>
-									<button onClick={ () => removeTask(index) }>Delete</button>
-								</td>
-							</tr>
+							<TaskRow task={ task } index={ index } removeTask={ removeTask } key={ Date.parse(task.date) - index } />
 						))
 					}
 				</tbody>
